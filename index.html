@@ -12,4 +12,29 @@ const supabaseClient = supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
+</script><div id="authBox" style="padding:20px;background:#171735;color:white">
+  <h2>CoCo Trading Hub — Account</h2>
+  <input id="authEmail" type="email" placeholder="Email">
+  <input id="authPassword" type="password" placeholder="Password">
+  <button type="button" onclick="registerUser()">Register</button>
+  <button type="button" onclick="loginUser()">Login</button>
+  <p id="authMessage"></p>
+</div>
+
+<script>
+async function registerUser() {
+  const email = document.getElementById("authEmail").value;
+  const password = document.getElementById("authPassword").value;
+  const { error } = await supabaseClient.auth.signUp({ email, password });
+  document.getElementById("authMessage").textContent =
+    error ? error.message : "Check your email to confirm registration.";
+}
+
+async function loginUser() {
+  const email = document.getElementById("authEmail").value;
+  const password = document.getElementById("authPassword").value;
+  const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  document.getElementById("authMessage").textContent =
+    error ? error.message : "Login successful!";
+}
 </script></body></html>
